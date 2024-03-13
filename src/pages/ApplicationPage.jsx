@@ -59,10 +59,15 @@ const ApplicationPage = () => {
     `;
 
     emailjs
-      .sendForm("service_nyz2tir", "template_66ltets", currentForm, {
-        publicKey: "TEhbHbIe5S7F3vknS",
-        message: messageBody,
-      })
+      .sendForm(
+        import.meta.env.VITE_EMAILJS_SERVICE_ID,
+        import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
+        currentForm,
+        {
+          publicKey: import.meta.env.VITE_EMAILJS_ACCESS_TOKEN,
+          message: messageBody,
+        }
+      )
       .then(
         () => {
           console.log("SUCCESS!");
@@ -124,7 +129,6 @@ const ApplicationPage = () => {
         productDescription: "",
       });
     } else {
-      // Display toast notifications for errors
       Object.values(formErrors).forEach((error) => {
         toast.error(error);
       });
