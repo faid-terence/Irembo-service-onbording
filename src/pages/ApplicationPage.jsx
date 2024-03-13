@@ -70,10 +70,10 @@ const ApplicationPage = () => {
       )
       .then(
         () => {
-          console.log("SUCCESS!");
+          toast.success("Application sent successfully");
         },
         (error) => {
-          console.log("FAILED...", error.text);
+          toast.error("Sorry, we could not send your application");
         }
       );
   };
@@ -103,7 +103,6 @@ const ApplicationPage = () => {
     }
     setErrors(formErrors);
     if (Object.keys(formErrors).length === 0) {
-      console.log("Form is valid", formData);
       // Send email
       sendEmail();
       toast.success("Thank for Applying , We will get back to you soon!");
@@ -133,8 +132,6 @@ const ApplicationPage = () => {
         toast.error(error);
       });
     }
-
-    console.log(formData);
   };
 
   return (
