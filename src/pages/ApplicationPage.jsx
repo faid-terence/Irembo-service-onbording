@@ -28,9 +28,16 @@ const ApplicationPage = () => {
     productDescription: "",
   });
 
+  const [isRwandan, setIsRwandan] = useState(true);
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
+  };
+
+  const handleCitizenshipChange = (e) => {
+    const { value } = e.target;
+    setIsRwandan(value === "Rwandan");
   };
 
   const [errors, setErrors] = useState({});
@@ -150,7 +157,10 @@ const ApplicationPage = () => {
               name="applicantCitizenship"
               id="applicantCitizenship"
               value={formData.applicantCitizenship}
-              onChange={handleChange}
+              onChange={(e) => {
+                handleChange(e);
+                handleCitizenshipChange(e);
+              }}
               required
             >
               <option value="">Select citizenship</option>
@@ -162,26 +172,51 @@ const ApplicationPage = () => {
             <label htmlFor="identificationnumber">
               Identification Document Number: <span>*</span>
             </label>
-            <input
-              type="tel"
-              id="identificationnumber"
-              name="identificationnumber"
-              value={formData.identificationnumber}
-              onChange={handleChange}
-            />
+            {isRwandan ? (
+              <input
+                type="tel"
+                id="identificationnumber"
+                name="identificationnumber"
+                value={formData.identificationnumber}
+                onChange={handleChange}
+                required
+              />
+            ) : (
+              <input
+                type="tel"
+                id="identificationnumber"
+                name="identificationnumber"
+                value={formData.identificationnumber}
+                onChange={handleChange}
+                disabled // Disable for foreigners
+                required
+              />
+            )}
           </div>
           <div className="form-group">
             <label htmlFor="passport">
               Passport Number: <span>*</span>
             </label>
-            <input
-              type="text"
-              id="passport"
-              name="passport"
-              value={formData.passport}
-              onChange={handleChange}
-              required
-            />
+            {isRwandan ? (
+              <input
+                type="text"
+                id="passport"
+                name="passport"
+                value={formData.passport}
+                onChange={handleChange}
+                disabled // Disable for Rwandans
+                required
+              />
+            ) : (
+              <input
+                type="text"
+                id="passport"
+                name="passport"
+                value={formData.passport}
+                onChange={handleChange}
+                required
+              />
+            )}
           </div>
           <div className="form-group">
             <label htmlFor="names">
